@@ -396,12 +396,19 @@ the boundary.
 ## 7. Materials
 
 **Total: $357.84.** Itemised in
-[`calculations/materials-cost.csv`](calculations/materials-cost.csv). Fasteners, adhesive
-and sealant are not costed.
+[`calculations/materials-cost.csv`](calculations/materials-cost.csv).
 
-> **Outstanding.** The materials schedule now records two sheets of MDF, consistent with
-> §3.1. An earlier revision recorded one, giving $308.86. The quantity should be confirmed
-> before publication, the discrepancy being $48.98.
+| Item | Qty | Unit | Ext |
+|---|---|---|---|
+| GRS 10SW-4HE, 10 in 4 Ω driver | 1 | $61.98 | $61.98 |
+| Dayton SPA300-D, 300 W plate amplifier | 1 | $167.98 | $167.98 |
+| MDF, ¾ in × 4 ft × 8 ft | 2 | $48.98 | $97.96 |
+| VViViD DECO65 chrome vinyl, 20 ft × 11.8 in | 1 | $11.98 | $11.98 |
+| RCA Y cable | 1 | $7.99 | $7.99 |
+| Speaker wire, 16 AWG, 9.14 m | 1 | $9.95 | $9.95 |
+| | | **Total** | **$357.84** |
+
+Fasteners, adhesive, primer and sealant are not costed.
 
 ---
 
