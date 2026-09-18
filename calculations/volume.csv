@@ -1,0 +1,6 @@
+item,litres,cubic_feet,source
+box internal volume,42.21,1.49,280 x 623 x 242 mm
+magnet volume,0.62,0.02,measured by displacement
+basket volume,2.51,0.09,measured by displacement
+driver displacement,3.13,0.11,magnet plus basket
+box effective volume,39.09,1.38,internal minus driver displacement

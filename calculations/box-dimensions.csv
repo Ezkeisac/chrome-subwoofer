@@ -1,0 +1,11 @@
+item,mm,in,source
+flange thickness,6,0.24,measured on the driver
+flange outer diameter,257,10.12,measured on the driver
+basket hole diameter,233,9.17,measured on the driver
+box internal width,280,11.02,derived: external width minus two walls
+box internal height,623,24.53,DERIVED from the volume requirement
+box internal length,242,9.53,derived: external length minus two walls
+box wall thickness,19,0.75,3/4 in MDF
+box external width,318,12.52,FIXED by R3 - Nova 7B footprint
+box external height,661,26.02,internal height plus two walls
+box external length,280,11.02,FIXED by R3 - Nova 7B footprint
