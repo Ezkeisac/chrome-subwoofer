@@ -172,16 +172,31 @@ panel size a joint left to cure under its own weight will creep.
 
 ### 3.2 Surface preparation
 
-The substrate was **extensively hand-sanded over every surface** before any vinyl was
-applied. This is the greater part of the labour and determines the final appearance.
+Preparation, not wrapping, is the operation that produces a mirror finish. The sequence
+was:
 
-The reason is visible in Figure 3: examining the reflection rather than the object,
-horizontal banding runs across the largest face. That is not a defect in the vinyl but
-the substrate geometry, magnified by the finish. A matte coating conceals of the order of
-one millimetre of departure from flatness across 600 mm; a specular finish renders the
-same departure as a line visible at conversational distance. **A chrome wrap functions as
-a measuring instrument for the underlying flatwork**, making surface preparation the
-principal operation rather than a preliminary to it.
+1. **Hand-sanding over every surface.**
+2. **Three coats of primer, sanded between coats.** This is the white coating visible in
+   Figure 2.
+3. Final sanding, then vinyl.
+
+Priming is not cosmetic here and cannot be skipped. MDF is porous and its routed edges
+more so; an unsealed surface absorbs unevenly and telegraphs its own fibre through any
+film laid over it. Successive primer coats fill that structure, and sanding between coats
+removes what each coat raises, converging on a flat, sealed, non-absorbent substrate.
+
+![Figure 2](images/construction-wrapping.jpeg)
+**Figure 2.** Cabinet after priming, before vinyl. The white coating is the third primer coat;
+the baffle is still bare MDF, showing the rebated aperture and the exposed core at the cut
+edge.
+
+Why this matters is visible in Figure 3. Examining the reflection rather than the object,
+horizontal banding runs across the largest face — not a defect in the vinyl, but residual
+substrate geometry magnified by the finish. A matte coating conceals of the order of one
+millimetre of departure from flatness across 600 mm; a specular finish renders the same
+departure as a line visible at conversational distance. **A chrome wrap functions as a
+measuring instrument for the flatwork beneath it**, which makes preparation the principal
+operation and the wrap the short step at the end.
 
 ### 3.3 Vinyl application
 
@@ -192,10 +207,6 @@ The placement is deliberate. On a specular finish a seam is permanent and conspi
 the reflection rendering the join visible from any angle. Sited on a corner, where the
 surface is already turning away from the observer, a seam is read as an edge; displaced
 40 mm onto a flat face, the same seam is read as a defect.
-
-![Figure 2](images/construction-wrapping.jpeg)
-**Figure 2.** Part-wrapped cabinet. The baffle remains bare, showing the rebated aperture and
-the exposed MDF core at the cut edge.
 
 > DECO65 is a calendered craft vinyl rather than a cast automotive film. It accommodates
 > flat panels and eased edges but is not suited to compound curvature.
@@ -212,24 +223,22 @@ dependencies: **[`scripts/`](scripts/)**
 
 ### 4.1 Signal path
 
-The studio runs a 5.1 layout on a Yamaha RX-V361. Terminal designations below are as
-given in the manual [1, p. 5]; the diagram is redrawn rather than reproduced.
+The studio runs a 5.1 layout on a Yamaha RX-V361 (Figure 4).
 
-```
-  Yamaha RX-V361  (rear)
-  ┌──────────────────────────┐
-  │  SUBWOOFER OUT  (RCA)    ├──────────► SPA300-D  LINE IN ──► 10in driver
-  │                          │
-  │  FRONT      L / R        ├──────────► Nova 7B × 2      main pair
-  │  CENTER                  ├──────────► centre speaker
-  │  SURROUND   L / R        ├──────────► surround pair
-  └──────────────────────────┘
-      speaker terminals: 16 AWG        subwoofer: RCA, line level
-```
+![Figure 4](images/receiver-rear.jpeg)
+**Figure 4.** Receiver rear panel as connected. Terminal groups, left to right: MULTI CH INPUT
+and AUDIO inputs; ANTENNA; SPEAKERS clip terminals for SURROUND R/L, CENTER and FRONT B;
+OUTPUT / SUB WOOFER; and FRONT A binding posts at right. Serial number cropped.
 
-Five speakers and the subwoofer. Only the FRONT pair and the subwoofer are relevant to
-the measurements reported here; the centre and surround channels carry no content during
-a stereo sweep and were left connected but idle.
+| Output | Connection |
+|---|---|
+| **FRONT A** binding posts | Nova 7B × 2 — the main pair |
+| **CENTER**, **SURROUND R/L** clip terminals | three additional speakers |
+| **SUB WOOFER** RCA | SPA300-D line input → 10-inch driver |
+
+Only the FRONT A pair and the subwoofer are relevant to the measurements reported here.
+The centre and surround channels carry no content during a stereo sweep and were left
+connected but idle.
 
 The subwoofer is driven from SUBWOOFER OUT rather than a full-range line output. **Two low-pass filters therefore act in series, and their slopes sum.** The
 receiver applies a fixed stage on this output, stated in the manual [1] as passing
