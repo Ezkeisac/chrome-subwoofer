@@ -14,8 +14,7 @@ its cross-section, leaving height as the only dimension by which the target inte
 volume can be reached.
 
 The cabinet was built from two sheets of 19 mm MDF with hand-held power tools, glued and
-clamped for 72 hours, and finished in chrome vinyl over an extensively hand-sanded
-substrate. Performance predicted from the manufacturer's published Thiele–Small
+clamped for 72 hours, then primed in three sanded coats and finished in chrome vinyl. Performance predicted from the manufacturer's published Thiele–Small
 parameters was compared against acoustic measurement with a Tascam DR-05 portable
 recorder, using a stepped-sine method requiring no synchronisation between playback and
 capture.
@@ -240,10 +239,11 @@ Only the FRONT A pair and the subwoofer are relevant to the measurements reporte
 The centre and surround channels carry no content during a stereo sweep and were left
 connected but idle.
 
-The subwoofer is driven from SUBWOOFER OUT rather than a full-range line output. **Two low-pass filters therefore act in series, and their slopes sum.** The
-receiver applies a fixed stage on this output, stated in the manual [1] as passing
-content below 90 Hz and not user-adjustable; the plate amplifier applies a second,
-adjustable stage. §6.1 quantifies the combined result.
+The subwoofer is driven from SUB WOOFER rather than a full-range line output, and **two
+low-pass filters therefore act in series, their slopes summing.** The receiver applies a
+fixed stage on this output, stated in the manual [1] as passing content below 90 Hz and
+not user-adjustable; the plate amplifier applies a second, adjustable stage. §6.1
+quantifies the combined result.
 
 Throughout measurement the receiver's signal processing was disabled and its volume
 control marked, ensuring a linear and repeatable path between takes.
@@ -334,7 +334,7 @@ resolution of the method.
 **R4 — chrome finish.** Satisfied (Figure 3).
 
 **R6 — 60 Hz crossover.** Measurement gives the combined filter chain as fourth-order,
-−3 dB at **57 Hz**. Deconvolving the receiver's fixed 90 Hz stage [1] places the plate
+−3 dB at **57 Hz**. Deconvolving the receiver's fixed 90 Hz SUB WOOFER stage [1] places the plate
 amplifier's own setting at approximately **62 Hz**, within 2 Hz of the requirement.
 **Satisfied.** Derivation: [`calculations/derive_crossover.py`](calculations/derive_crossover.py).
 
