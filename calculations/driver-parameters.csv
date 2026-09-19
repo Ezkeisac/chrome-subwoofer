@@ -1,0 +1,10 @@
+parameter,symbol,value,unit,source
+free-air resonance,Fs,25.2,Hz,manufacturer published
+total damping,Qts,0.50,,manufacturer published
+equivalent compliance volume,Vas,60.7,L,manufacturer published
+DC resistance,Re,3.8,ohm,manufacturer published
+effective cone area,Sd,346.4,cm2,manufacturer published
+peak linear excursion,Xmax,11,mm,manufacturer published
+system damping in enclosure,Qtc,0.799,,derived from Vb 39.08 L
+system resonance in enclosure,Fc,40.27,Hz,derived from Vb 39.08 L
+minus 3 dB point,F3,36.16,Hz,derived from Vb 39.08 L

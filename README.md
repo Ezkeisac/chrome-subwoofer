@@ -1,8 +1,6 @@
-# A chrome-wrapped sealed subwoofer for a home studio: design under a fixed-footprint constraint, and its acoustic verification
+# A chrome-wrapped sealed subwoofer for a home studio
 
-**Isaac — 2026**
-
-Documentation CC BY-SA 4.0 · code MIT · [`LICENSE`](LICENSE)
+**Ezkeisac — 2026**
 
 ---
 
@@ -14,10 +12,10 @@ its cross-section, leaving height as the only dimension by which the target inte
 volume can be reached.
 
 The cabinet was built from two sheets of 19 mm MDF with hand-held power tools, glued and
-clamped for 72 hours, then primed in three sanded coats and finished in chrome vinyl. Performance predicted from the manufacturer's published Thiele–Small
-parameters was compared against acoustic measurement with a Tascam DR-05 portable
-recorder, using a stepped-sine method requiring no synchronisation between playback and
-capture.
+clamped for 72 hours, then primed in three sanded coats and finished in chrome vinyl.
+Performance predicted from the manufacturer's published Thiele–Small parameters was
+compared against acoustic measurement with a Tascam DR-05 portable recorder, using a
+stepped-sine method requiring no synchronisation between playback and capture.
 
 Agreement over 20–80 Hz is 3.65 dB mean absolute error. Three results: the crossover
 arises from two cascaded filters rather than one and falls within 2 Hz of its design
@@ -48,7 +46,7 @@ third is retained because the error was instructive.
 ## 1. Design requirements
 
 Requirements were stated such that each could be evaluated against measurement on
-completion. Verification is reported in §6.1.
+completion. Verification is reported in [`DISCUSSION.md`](DISCUSSION.md) §6.1.
 
 | # | Requirement |
 |---|---|
@@ -70,77 +68,63 @@ was measured, and 60 Hz is where the subwoofer must assume responsibility.
 
 ## 2. Enclosure design
 
-Complete working: [`derive_box.py`](calculations/derive_box.py) ·
-[`box-dimensions.csv`](calculations/box-dimensions.csv) ·
-[`volume.csv`](calculations/volume.csv)
+All dimensional and volumetric figures, and the derivation that produces them, are in
+[`calculations/`](calculations/) — [`derive_box.py`](calculations/derive_box.py),
+[`box-dimensions.csv`](calculations/box-dimensions.csv),
+[`volume.csv`](calculations/volume.csv),
+[`driver-parameters.csv`](calculations/driver-parameters.csv).
 
 ```bash
 python3 calculations/derive_box.py
 ```
 
-### 2.1 Method
+### 2.1 An inverted design problem
 
-Conventional design proceeds from a target volume to proportions chosen for convenience.
-Here the proportions are given and the volume must be reached through what remains.
+Enclosure design normally begins with a target volume and arrives at proportions, which
+are chosen for whatever suits — a cube for stiffness, a slim tower for floor area, a
+squat box to sit under a desk. The acoustic requirement leads and the shape follows.
 
-**R3 fixes the cross-section.** The footprint must match a Nova 7B, so external width and
-length are set before any acoustic consideration enters. Internal cross-section follows
-by subtracting two wall thicknesses:
+R3 inverts that. Requiring the cabinet to carry a monitor fixes its footprint before any
+acoustic consideration is admitted, and a fixed footprint fixes the internal
+cross-sectional area once wall thickness is subtracted. **The shape leads and the volume
+must follow.**
 
-| Quantity | Value |
-|---|---|
-| External cross-section | 318 × 280 mm (fixed by R3) |
-| Wall thickness | 19 mm (¾ in MDF) |
-| Internal cross-section | 280 × 242 mm |
-| Internal area *A* | 67,760 mm² = 0.06776 m² |
+This leaves the design with a single degree of freedom. Where a conventional enclosure is
+specified by three dimensions chosen together, this one has two imposed and one to solve:
+height is whatever satisfies the volume requirement across the area already given. The
+derivation is therefore a division, and the interesting work lies in what that division
+constrains rather than in performing it.
 
-**Height is solved from the volume.** With *A* fixed, one dimension remains:
+### 2.2 Accounting for the driver
 
-> *h* = *V* / *A* = 42.21 L ÷ 0.06776 m² = **622.9 mm**
+The volume the driver experiences is not the volume enclosed. Magnet and basket occupy
+space and must be deducted, and doing so properly requires measuring them rather than
+estimating: both were determined by water displacement. The distinction matters because
+every subsequent prediction is a function of the effective volume, not the internal one.
 
-The cabinet was built at 623 mm.
+### 2.3 Consequence of the constraint
 
-**Driver displacement is deducted.** The magnet and basket occupy enclosure volume;
-what remains is acoustically effective. Measured by water displacement:
+Solving under R3 produces a column roughly twice as tall as it is wide, where an
+unconstrained enclosure of the same volume would approximate a cube. The proportions are
+therefore a consequence of a requirement rather than a preference — and they are not
+acoustically neutral, since a tall narrow box has one panel substantially larger than the
+others. Whether that matters is the question §6.2 answers.
 
-| Quantity | Litres |
-|---|---|
-| Internal volume | 42.21 |
-| Magnet | 0.62 |
-| Basket | 2.51 |
-| Driver displacement | 3.13 |
-| **Effective volume** *V*<sub>b</sub> | **39.08** |
+### 2.4 Driver parameters and their standing
 
-### 2.2 Consequence of the constraint
+Prediction proceeds from the **manufacturer's published Thiele–Small parameters** for the
+GRS 10SW-4HE, taken from the driver manual. They were not independently measured.
 
-An unconstrained 42 L enclosure approximates a 348 mm cube. R3 precludes it: holding the
-footprint and solving for height yields a column **2.2 times taller than wide**. The
-proportions are a consequence of the requirement, and they produce one panel
-substantially larger than the others — which raises the bracing question addressed in
-§6.2.
+This is a methodological weakness stated rather than concealed. Unit-to-unit tolerance on
+these parameters is routinely ±10–20%, so they describe a driver of this model rather
+than necessarily this specimen, and every quantity derived from them inherits that
+uncertainty. §6.3 returns to it: one unresolved residual would be accounted for if the
+published figures do not describe the driver actually fitted.
 
-### 2.3 Driver parameters
-
-Prediction uses the **manufacturer's published Thiele–Small parameters** for the
-GRS 10SW-4HE, taken from the driver manual. These were not independently measured, and
-unit-to-unit tolerance is routinely ±10–20% — so they describe a driver of this model
-rather than necessarily this specimen. §6.3 returns to this, as one unresolved residual
-would be accounted for by their being inaccurate.
-
-| Parameter | Value |
-|---|---|
-| *F*<sub>s</sub> | 25.2 Hz |
-| *Q*<sub>ts</sub> | 0.50 |
-| *V*<sub>as</sub> | 60.7 L |
-| *R*<sub>e</sub> | 3.8 Ω |
-| *S*<sub>d</sub> | 346.4 cm² |
-| *X*<sub>max</sub> | 11 mm |
-
-Substituting into the sealed-alignment relations gives *Q*<sub>tc</sub> = 0.799,
-*F*<sub>c</sub> = 40.27 Hz, *F*<sub>3</sub> = 36.16 Hz. Sitting slightly above Butterworth
-(0.707) was accepted deliberately: a small room contributes low-frequency gain, and a
-gently rolling response combines with that gain more predictably than a flat anechoic
-one.
+Substituting them into the standard sealed-alignment relations gives a system damping
+slightly above Butterworth. That was accepted deliberately rather than corrected — a
+small room contributes low-frequency gain of its own, and a gently rolling response
+combines with that gain more predictably than a flat anechoic one does.
 
 ---
 
@@ -217,198 +201,119 @@ surface is already turning away from the observer, a seam is read as an edge; di
 
 ## 4. Measurement method
 
-Analysis software, implemented in the Python standard library with no external
-dependencies: **[`scripts/`](scripts/)**
+Implementation, entirely in the Python standard library with nothing to install:
+[`scripts/`](scripts/). Each script carries a `selftest`.
 
 ### 4.1 Signal path
 
-The studio runs a 5.1 layout on a Yamaha RX-V361 (Figure 4).
+The subwoofer is one element of a 5.1 system, and what the receiver does to the signal
+before it reaches the plate amplifier turns out to matter more than anything downstream
+of it.
 
-![Figure 4](images/receiver-rear.jpeg)
-**Figure 4.** Receiver rear panel as connected. Terminal groups, left to right: MULTI CH INPUT
-and AUDIO inputs; ANTENNA; SPEAKERS clip terminals for SURROUND R/L, CENTER and FRONT B;
-OUTPUT / SUB WOOFER; and FRONT A binding posts at right. Serial number cropped.
+![Figure 4](images/system-wiring.jpeg)
+**Figure 4.** The system as wired. Nova 7B mains on the FRONT A binding posts at right; two
+surround speakers and a small booth monitor on the SURROUND and CENTER clip terminals; the
+subwoofer on the SUB WOOFER RCA output. Source equipment occupies the AUDIO inputs — a
+turntable on DVD, a DJ controller on CD. Serial number cropped.
 
-| Output | Connection |
-|---|---|
-| **FRONT A** binding posts | Nova 7B × 2 — the main pair |
-| **CENTER**, **SURROUND R/L** clip terminals | three additional speakers |
-| **SUB WOOFER** RCA | SPA300-D line input → 10-inch driver |
+The consequential detail is that the subwoofer is driven from SUB WOOFER rather than a
+full-range output. **That places two low-pass filters in series**, the receiver's own and
+the plate amplifier's, and their slopes sum. A measurement of the system therefore
+characterises the pair, and attributing the result to the amplifier alone would be an
+error — one §6.1 has to unpick.
 
-Only the FRONT A pair and the subwoofer are relevant to the measurements reported here.
-The centre and surround channels carry no content during a stereo sweep and were left
-connected but idle.
+Only the main pair and the subwoofer participate in the measurements reported here. The
+remaining channels carry nothing during a stereo sweep and were left connected.
 
-The subwoofer is driven from SUB WOOFER rather than a full-range line output, and **two
-low-pass filters therefore act in series, their slopes summing.** The receiver applies a
-fixed stage on this output, stated in the manual [1] as passing content below 90 Hz and
-not user-adjustable; the plate amplifier applies a second, adjustable stage. §6.1
-quantifies the combined result.
+Receiver signal processing was disabled and the volume control marked, so the path is
+linear and identical between takes. A gain change between takes would introduce a fixed
+error into every subsequent comparison with nothing in the data to reveal it.
 
-Throughout measurement the receiver's signal processing was disabled and its volume
-control marked, ensuring a linear and repeatable path between takes.
+### 4.2 Why stepped tones rather than a sweep
 
-### 4.2 Excitation and analysis
+Playback and capture ran on separate devices sharing no clock — a laptop and the DR-05.
+Swept measurement assumes the two can be aligned in time, and they cannot be.
 
-Playback and capture ran on separate devices sharing no clock — a laptop and the DR-05. A
-swept measurement requires the two to be aligned in time; **a stepped-sine excitation does
-not**, each tone being an independent measurement at a known frequency.
+A stepped excitation removes the assumption instead of working around it. Each tone is an
+independent measurement at a frequency known exactly, so drift between the devices has
+nothing to corrupt: there is no timeline to preserve, only a set of separate observations.
+The frequency being known also means magnitude can be extracted directly at that
+frequency rather than by transforming the whole recording, which is why the analysis
+needs no numerical libraries.
 
-Forty-five tones, logarithmically spaced 5–500 Hz. Window length scales inversely with
-frequency — 1.60 s at the lower limit, 0.50 s above 16 Hz — since 0.5 s at 5 Hz contains
-only 2.5 cycles and *F*<sub>s</sub> lies in that region. The generator emits a manifest
-recording the sample position of every tone, which the analyser reads rather than
-recomputing, so the two cannot disagree about which window belongs to which frequency.
+Two details follow from the same reasoning. Window length is scaled to frequency rather
+than held constant, because a window fixed in seconds contains progressively fewer cycles
+as frequency falls, and the region of interest is the lowest. And the generator records
+where every tone was placed, which the analyser reads rather than recomputing — two
+programs deriving the same layout independently is an opportunity for them to disagree
+silently.
 
-Each tone's frequency being known, its magnitude comes from a single DFT bin evaluated at
-that frequency — one FFT bin's cost without the transform. Temporal alignment is found by
-search: at the correct offset each window contains its tone in full, while misaligned
-windows straddle boundaries and lose amplitude. The maximum typically exceeds the
-worst-case offset by two orders of magnitude.
+### 4.3 What the method can establish
 
-### 4.3 Limitations
+The instrument is an uncalibrated recorder, so the measurements are **relative**. Spectral
+shape is available — the position of a knee, the slope below it, where one source yields
+to another — and absolute sound pressure is not.
 
-The method resolves **relative spectral shape** — *F*<sub>3</sub>, slope, the position of
-a knee, the location of a crossover — but not absolute sound pressure level, the
-microphone being uncalibrated. All curves are normalised to a reference band. Shape is
-the quantity the prediction concerns, which limits the practical cost.
+This is a real limitation and it bounds what §6.1 may claim. It is also a tolerable one,
+because every prediction made here is a statement about shape.
 
 ### 4.4 Error sources identified during measurement
 
-Three procedural errors, each having produced a plausible rather than an evidently
-erroneous result:
+Three procedural errors are recorded because each produced a plausible result rather than
+an obviously broken one, and a plausible wrong answer is the more dangerous failure:
 
-1. **A 1 kHz alignment marker is not reproduced by a subwoofer.** The signal chain
-   low-passes the marker; automatic detection consequently locks to the first
-   high-amplitude event instead, displacing every analysis window.
-2. **Clipping synthesises a flat response.** A take peaking at 0 dBFS measured flat to
-   within 0.5 dB across an octave and returned *better* agreement with prediction than
-   the valid take. Sample-level saturation must be excluded before interpretation.
-3. **The microphone captures the complete system.** With a main loudspeaker standing on
-   the subwoofer, no proximate microphone position is acoustically isolated. See §6.2.
+1. **An alignment marker outside the system's passband is not reproduced.** A 1 kHz
+   marker cannot survive a chain that low-passes, so automatic detection locks to the
+   first loud event instead and displaces every window.
+2. **Clipping synthesises a flat response.** A saturated take measured flat across an
+   octave and agreed with prediction *better* than the valid one. Saturation must be
+   excluded before a result is interpreted, not after it looks wrong.
+3. **A microphone near the subwoofer is not measuring the subwoofer.** With a main
+   loudspeaker standing on the cabinet, no proximate position is acoustically isolated.
+   See §6.2.
 
 ---
 
 ## 5. Results
 
-Measurement source: `data/response_sub_isolated.csv`. Mains disconnected, 24-bit WAV,
-peak −2.8 dBFS, no sample saturation, 45 of 45 tones recovered.
+![Figure 5](images/response.svg)
+**Figure 5.** Measured response of the isolated subwoofer against the sealed-alignment
+prediction, 12–200 Hz. Relative level, normalised to a reference band; the uncalibrated
+instrument gives no absolute reference. Regenerate with
+`python3 scripts/plot_response.py`.
 
-**Table 1.** Measured response against prediction, 20–80 Hz. Mean absolute error 3.65 dB.
+Measurement source: [`data/response_sub_isolated.csv`](data/response_sub_isolated.csv) —
+mains disconnected, 24-bit, peak −2.8 dBFS, no saturation, 45 of 45 tones recovered.
+Point-by-point values:
+[`calculations/measured-vs-predicted.csv`](calculations/measured-vs-predicted.csv).
 
-| Frequency (Hz) | Measured (dB) | Predicted (dB) | Difference (dB) |
-|---|---|---|---|
-| 21.6 | −9.46 | −10.63 | +1.17 |
-| 26.7 | −9.61 | −7.19 | −2.41 |
-| 29.6 | −4.94 | −5.44 | +0.50 |
-| 32.9 | −0.64 | −4.16 | +3.53 |
-| 36.5 | +0.89 | −2.78 | +3.68 |
-| 40.6 | +2.88 | −1.88 | +4.76 |
-| 45.0 | +1.23 | −1.01 | +2.24 |
-| 50.0 | +1.83 | −0.52 | +2.35 |
-| 55.5 | +3.58 | −0.11 | +3.69 |
-| 61.6 | −1.91 | +0.13 | −2.04 |
-| 68.4 | −3.50 | +0.23 | −3.73 |
-| 76.0 | −9.11 | +0.29 | −9.41 |
-
-Two structures are present in the residual: an excess in the region of *F*<sub>c</sub>,
-and an attenuation above 60 Hz not predicted by the enclosure model. The latter is
-attributable to the signal path and is treated in §6.1.
+Over 20–80 Hz the mean absolute difference is **3.65 dB**. Two structures are present in
+the residual, and they have different causes. An excess in the region of
+*F*<sub>c</sub> is unexplained and treated in §6.3. The attenuation above 60 Hz is not a
+property of the enclosure at all but of the signal path described in §4.1, and is
+resolved in §6.1.
 
 ---
 
 ## 6. Discussion
 
-### 6.1 Verification against requirements
+Verification against each requirement, the bracing question, the superseded panel result,
+the unresolved residual and recommendations for repetition are set out in
+**[`DISCUSSION.md`](DISCUSSION.md)**.
 
-**R1 — output to approximately 35 Hz.** Predicted *F*<sub>3</sub> is 36.2 Hz, and the
-measured spectral shape is consistent with this value. **Supported but not confirmed**, an
-uncalibrated instrument providing no absolute reference.
-
-**R2 — integration with the mains.** The acoustic transition occurs near 80 Hz with
-neither a deficiency nor an excess evident across the overlap. **Satisfied** within the
-resolution of the method.
-
-**R3 — footprint.** Satisfied by construction (Figure 3).
-
-**R4 — chrome finish.** Satisfied (Figure 3).
-
-**R6 — 60 Hz crossover.** Measurement gives the combined filter chain as fourth-order,
-−3 dB at **57 Hz**. Deconvolving the receiver's fixed 90 Hz SUB WOOFER stage [1] places the plate
-amplifier's own setting at approximately **62 Hz**, within 2 Hz of the requirement.
-**Satisfied.** Derivation: [`calculations/derive_crossover.py`](calculations/derive_crossover.py).
-
-> This deconvolution assumes the receiver stage to be second-order at 90 Hz. The manual
-> specifies the frequency but not the slope, which was not independently confirmed. **The
-> combined result — fourth-order at 57 Hz — is measured directly and is independent of
-> how the two stages divide.**
-
-### 6.2 Enclosure resonance and the necessity of bracing
-
-Two independent arguments.
-
-**Analytically:** treating the largest panel (280 × 623 mm, 19 mm MDF) as a rectangular
-plate bounds its fundamental bending mode between 260 and 590 Hz, across simply-supported
-to fully-clamped edge conditions and a realistic range of MDF elastic modulus
-([`panel_modes.py`](scripts/panel_modes.py)). **Empirically:** the isolated subwoofer
-measures **59 dB below reference at 175 Hz**.
-
-A panel radiates at its resonance only when excited there. Since no significant energy
-above roughly 100 Hz reaches the driver, the panel resonance — wherever it falls within
-the computed bounds — is never excited, and bracing would have served no function.
-
-**A superseded result.** With the microphone at the side panel, an excess of 5–11 dB was
-initially observed between 104 and 195 Hz, consistent in form with panel radiation. It did
-not survive isolation of the source: a main loudspeaker stands on the subwoofer, so moving
-the microphone from cone to panel also moved it relative to that loudspeaker. With the
-mains disconnected the difference between conditions above 128 Hz is 24–43 dB, increasing
-with frequency — the behaviour of two-way loudspeakers assuming the band.
-
-The error was caught only because the measurement had been recorded as confounded before
-the isolated take existed. **A result consistent with an anticipated conclusion warrants
-greater scrutiny, not less.**
-
-### 6.3 Unresolved residual
-
-Between 32 and 56 Hz, clear of the filter chain, measurement exceeds prediction by about
-3 dB. Three hypotheses: the published parameters do not describe this specimen (§2.3);
-boundary reinforcement, the cabinet being against a wall; or non-flat microphone response.
-
-**None is eliminated by the present data.** The residual is a maximum centred near
-*F*<sub>c</sub> rather than a monotonic rise toward low frequency, the latter being more
-characteristic of boundary loading — weakly favouring the first without establishing it.
-Resolution requires measured driver parameters, or repetition with the cabinet away from
-the boundary.
-
-### 6.4 Recommendations for repetition
-
-- **Measure driver parameters prior to construction.** Every unresolved residual reported
-  here admits "the published parameters may be inaccurate" among its hypotheses.
-- **Document construction contemporaneously.** Portions of §3 are reconstructed.
-- **Employ a calibrated microphone.** This converts every relative measurement reported
-  here into an absolute one, at a cost small relative to the build.
-- **Account for both filter stages at the design stage.** The receiver's fixed 90 Hz
-  stage was not anticipated, and the plate amplifier was adjusted as though it were the
-  only filter in the path.
+In summary: R1 supported but not confirmed, an uncalibrated instrument giving no absolute
+reference; R2, R3, R4 satisfied; R6 satisfied, the plate amplifier's own setting deriving
+to within 2 Hz of the 60 Hz requirement once the receiver's fixed stage is deconvolved.
+Bracing is shown unnecessary by two independent arguments. One residual of about 3 dB near
+*F*<sub>c</sub> remains unexplained, with three candidate causes and none eliminated.
 
 ---
 
 ## 7. Materials
 
-**Total: $357.84.** Itemised in
-[`calculations/materials-cost.csv`](calculations/materials-cost.csv).
-
-| Item | Qty | Unit | Ext |
-|---|---|---|---|
-| GRS 10SW-4HE, 10 in 4 Ω driver | 1 | $61.98 | $61.98 |
-| Dayton SPA300-D, 300 W plate amplifier | 1 | $167.98 | $167.98 |
-| MDF, ¾ in × 4 ft × 8 ft | 2 | $48.98 | $97.96 |
-| VViViD DECO65 chrome vinyl, 20 ft × 11.8 in | 1 | $11.98 | $11.98 |
-| RCA Y cable | 1 | $7.99 | $7.99 |
-| Speaker wire, 16 AWG, 9.14 m | 1 | $9.95 | $9.95 |
-| | | **Total** | **$357.84** |
-
-Fasteners, adhesive, primer and sealant are not costed.
+Total **$357.84**, itemised in
+[`calculations/materials-cost.csv`](calculations/materials-cost.csv). Fasteners, adhesive,
+primer and sealant are not costed.
 
 ---
 
@@ -421,9 +326,12 @@ https://data.yamaha.com/files/download/other_assets/3/319863/RX-V361_manual.pdf
 
 ## Repository
 
-| Directory | Contents |
+| | Contents |
 |---|---|
-| [`calculations/`](calculations/) | Dimensional and volumetric data, cost schedule, and executable derivations |
-| [`scripts/`](scripts/) | Excitation generation and analysis. Standard library only; each carries a `selftest` |
-| [`data/`](data/) | Measurement data with provenance and stated limitations |
-| [`images/`](images/) | Construction and completed-assembly photographs |
+| [`DISCUSSION.md`](DISCUSSION.md) | Verification against requirements, the bracing question, the superseded panel result, and recommendations |
+| [`calculations/`](calculations/) | Dimensions, volumes, driver parameters, the measured-against-predicted table, cost schedule, and executable derivations |
+| [`scripts/`](scripts/) | Excitation, analysis and plotting. Standard library only; each carries a `selftest` |
+| [`data/`](data/) | Raw measurement data with provenance and stated limitations |
+| [`images/`](images/) | Construction, system and completed-assembly photographs |
+
+Licence: documentation CC BY-SA 4.0, code MIT — [`LICENSE`](LICENSE).
