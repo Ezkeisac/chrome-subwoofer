@@ -126,6 +126,31 @@ slightly above Butterworth. That was accepted deliberately rather than corrected
 small room contributes low-frequency gain of its own, and a gently rolling response
 combines with that gain more predictably than a flat anechoic one does.
 
+### 2.5 Transfer function
+
+A sealed enclosure is a second-order high-pass. Normalising frequency to the system
+resonance, with $s = j\,(f/F_c)$:
+
+$$H(s) = \frac{s^{2}}{s^{2} + \dfrac{s}{Q_{tc}} + 1}$$
+
+Only *F*<sub>c</sub> and *Q*<sub>tc</sub> appear. Everything the prediction claims —
+*F*<sub>3</sub>, the slope below it, whether the response peaks before rolling off — is
+carried by those two numbers. That is why §2.1 can treat the design as a single-variable
+problem and still say something about how it will behave.
+
+Writing $x = f/F_c$, the magnitude plotted in Figure 5 is
+
+$$|H(x)| = \frac{x^{2}}{\sqrt{\left(1 - x^{2}\right)^{2} + \left(\dfrac{x}{Q_{tc}}\right)^{2}}}$$
+
+Far below resonance the numerator dominates and output falls at 12 dB per octave; far
+above it the expression tends to unity and the response is flat. $Q_{tc} = 0.707$ places
+*F*<sub>3</sub> exactly at *F*<sub>c</sub>; above that value the response peaks before
+rolling off, which is the case here.
+
+Implemented in [`scripts/model.py`](scripts/model.py), whose `selftest` verifies the
+Butterworth identity, the 12 dB per octave asymptote and the flat passband rather than
+assuming them.
+
 ---
 
 ## 3. Construction
@@ -190,9 +215,6 @@ The placement is deliberate. On a specular finish a seam is permanent and conspi
 the reflection rendering the join visible from any angle. Sited on a corner, where the
 surface is already turning away from the observer, a seam is read as an edge; displaced
 40 mm onto a flat face, the same seam is read as a defect.
-
-> DECO65 is a calendered craft vinyl rather than a cast automotive film. It accommodates
-> flat panels and eased edges but is not suited to compound curvature.
 
 ![Figure 3](images/finished-in-situ.jpeg)
 **Figure 3.** Completed cabinet in position, a Nova 7B standing on it per R3.
