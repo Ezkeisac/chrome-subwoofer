@@ -2,6 +2,12 @@
 
 Companion to [`README.md`](README.md). Section numbering follows the paper.
 
+Agreement over 20–80 Hz is 3.65 dB mean absolute error. Three results: the crossover
+arises from two cascaded filters rather than one and falls within 2 Hz of its design
+target (§6.1); bracing is shown unnecessary by two independent arguments (§6.2); and an
+artefact first read as panel radiation is shown to be contamination from the main
+loudspeakers (§6.2). The third is retained because the error was instructive.
+
 ## 6.1 Verification against requirements
 
 **R1 — output to approximately 35 Hz.** Predicted *F*<sub>3</sub> is 36.2 Hz, and the

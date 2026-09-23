@@ -17,12 +17,6 @@ Performance predicted from the manufacturer's published Thiele–Small parameter
 compared against acoustic measurement with a Tascam DR-05 portable recorder, using a
 stepped-sine method requiring no synchronisation between playback and capture.
 
-Agreement over 20–80 Hz is 3.65 dB mean absolute error. Three results: the crossover
-arises from two cascaded filters rather than one and falls within 2 Hz of its design
-target; bracing is shown unnecessary by two independent arguments; and an artefact first
-read as panel radiation is shown to be contamination from the main loudspeakers. The
-third is retained because the error was instructive.
-
 ---
 
 ## Nomenclature
