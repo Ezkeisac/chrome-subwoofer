@@ -17,6 +17,13 @@ Performance predicted from the manufacturer's published Thiele–Small parameter
 compared against acoustic measurement with a Tascam DR-05 portable recorder, using a
 stepped-sine method.
 
+The enclosure meets every requirement it was designed against: footprint and finish by
+construction, integration with the mains within the resolution of the method, and the
+60 Hz crossover to within 2 Hz once the receiver's own fixed filter stage is deconvolved.
+The low-frequency requirement is supported — predicted *F*<sub>3</sub> is 36.2 Hz — but
+not confirmed absolutely, the instrument being uncalibrated. Prediction and measurement
+agree to 3.65 dB mean absolute error over 20–80 Hz.
+
 ---
 
 ## Nomenclature
