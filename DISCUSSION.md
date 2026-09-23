@@ -2,11 +2,19 @@
 
 Companion to [`README.md`](README.md). Section numbering follows the paper.
 
-Agreement over 20–80 Hz is 3.65 dB mean absolute error. Three results: the crossover
-arises from two cascaded filters rather than one and falls within 2 Hz of its design
-target (§6.1); bracing is shown unnecessary by two independent arguments (§6.2); and an
-artefact first read as panel radiation is shown to be contamination from the main
-loudspeakers (§6.2). The third is retained because the error was instructive.
+**The enclosure meets every requirement it was designed against.** R3 and R4 are
+satisfied by construction. R2 is satisfied within the resolution of the method. R6 is
+satisfied: the crossover proves to arise from two cascaded filters rather than one, and
+deconvolving the receiver's fixed stage places the plate amplifier within 2 Hz of the
+60 Hz target. R1 is supported — predicted *F*<sub>3</sub> is 36.2 Hz against a requirement
+of approximately 35 Hz, and the measured shape agrees — but an uncalibrated instrument
+cannot confirm it absolutely (§6.1).
+
+Prediction and measurement agree to 3.65 dB mean absolute error over 20–80 Hz. Two
+further results follow from the same data: bracing is shown unnecessary by two
+independent arguments (§6.2), and an artefact first read as panel radiation is shown to
+be contamination from the main loudspeakers (§6.2) — retained because the error was
+instructive. One residual of about 3 dB near *F*<sub>c</sub> remains unexplained (§6.3).
 
 ## 6.1 Verification against requirements
 

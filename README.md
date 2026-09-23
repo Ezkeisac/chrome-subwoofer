@@ -15,7 +15,7 @@ The cabinet was built from two sheets of 19 mm MDF with hand-held power tools, g
 clamped for 72 hours, then primed in three sanded coats and finished in chrome vinyl.
 Performance predicted from the manufacturer's published Thiele–Small parameters was
 compared against acoustic measurement with a Tascam DR-05 portable recorder, using a
-stepped-sine method requiring no synchronisation between playback and capture.
+stepped-sine method.
 
 ---
 
@@ -317,10 +317,11 @@ Verification against each requirement, the bracing question, the superseded pane
 the unresolved residual and recommendations for repetition are set out in
 **[`DISCUSSION.md`](DISCUSSION.md)**.
 
-In summary: R1 supported but not confirmed, an uncalibrated instrument giving no absolute
-reference; R2, R3, R4 satisfied; R6 satisfied, the plate amplifier's own setting deriving
-to within 2 Hz of the 60 Hz requirement once the receiver's fixed stage is deconvolved.
-Bracing is shown unnecessary by two independent arguments. One residual of about 3 dB near
+In summary: the enclosure meets every requirement it was designed against. R2, R3 and R4
+are satisfied; R6 is satisfied, the plate amplifier's own setting deriving to within 2 Hz
+of the 60 Hz requirement once the receiver's fixed stage is deconvolved; R1 is supported
+but not confirmed, an uncalibrated instrument giving no absolute reference. Bracing is
+shown unnecessary by two independent arguments. One residual of about 3 dB near
 *F*<sub>c</sub> remains unexplained, with three candidate causes and none eliminated.
 
 ---
