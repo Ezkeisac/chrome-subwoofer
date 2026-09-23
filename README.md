@@ -324,13 +324,6 @@ Verification against each requirement, the bracing question, the superseded pane
 the unresolved residual and recommendations for repetition are set out in
 **[`DISCUSSION.md`](DISCUSSION.md)**.
 
-In summary: the enclosure meets every requirement it was designed against. R2, R3 and R4
-are satisfied; R6 is satisfied, the plate amplifier's own setting deriving to within 2 Hz
-of the 60 Hz requirement once the receiver's fixed stage is deconvolved; R1 is supported
-but not confirmed, an uncalibrated instrument giving no absolute reference. Bracing is
-shown unnecessary by two independent arguments. One residual of about 3 dB near
-*F*<sub>c</sub> remains unexplained, with three candidate causes and none eliminated.
-
 ---
 
 ## 7. Materials
