@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Local preview scaffolding — regenerate with scripts/preview_readme.py
+preview-chrome-draft.html

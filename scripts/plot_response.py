@@ -6,6 +6,11 @@ measurement and model data, so the figure in the paper and the table behind it
 come from one source and cannot drift apart.
 
     python3 scripts/plot_response.py
+    python3 scripts/plot_response.py --dark      images/response-dark.svg
+
+The dark variant exists so a <picture> block can hand the reader the figure drawn on
+their own background. A chrome surface returns the room it is in; this is the only
+place a web page can do that.
 """
 import csv, math, os, sys
 
@@ -16,6 +21,9 @@ W, H = 760, 380
 L, R, T, B = 56, 18, 20, 52
 FMIN, FMAX, DMIN, DMAX = 12.0, 200.0, -62.0, 10.0
 MEAS, PRED, INK, MUTED, GRID = '#1B6CA8', '#C4762A', '#1d2125', '#6b7580', '#dfe3e8'
+PAPER, PLOT = '#ffffff', '#fafbfc'
+DARK = dict(MEAS='#56A8E0', PRED='#E09A4F', INK='#e6e9ed', MUTED='#8b95a1',
+            GRID='#2b3138', PAPER='#0d1117', PLOT='#11161d')
 
 
 def read(path):
@@ -32,6 +40,11 @@ def py(db):
 
 
 def main():
+    global MEAS, PRED, INK, MUTED, GRID, PAPER, PLOT
+    dark = '--dark' in sys.argv
+    if dark:
+        MEAS, PRED, INK = DARK['MEAS'], DARK['PRED'], DARK['INK']
+        MUTED, GRID, PAPER, PLOT = DARK['MUTED'], DARK['GRID'], DARK['PAPER'], DARK['PLOT']
     meas = read(os.path.join(ROOT, 'data', 'response_sub_isolated.csv'))
     pred = read(os.path.join(ROOT, 'data', 'predicted_sealed.csv'))
     hz = [h for h in sorted(meas) if FMIN <= h <= FMAX]
@@ -63,8 +76,8 @@ def main():
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}"
      font-family="system-ui,-apple-system,Segoe UI,sans-serif" role="img"
      aria-label="Measured response against prediction, 12 to 200 hertz">
-<rect width="{W}" height="{H}" fill="#ffffff"/>
-<rect x="{L}" y="{T}" width="{W-L-R}" height="{H-T-B}" fill="#fafbfc"/>
+<rect width="{W}" height="{H}" fill="{PAPER}"/>
+<rect x="{L}" y="{T}" width="{W-L-R}" height="{H-T-B}" fill="{PLOT}"/>
 {g}
 <path d="{path(pred)}" fill="none" stroke="{PRED}" stroke-width="2.2" stroke-dasharray="6 4"/>
 <path d="{path(meas)}" fill="none" stroke="{MEAS}" stroke-width="2.6" stroke-linejoin="round"/>
@@ -80,10 +93,12 @@ def main():
 </g>
 </svg>
 '''
-    sp = os.path.join(ROOT, 'images', 'response.svg')
+    sp = os.path.join(ROOT, 'images',
+                      'response-dark.svg' if dark else 'response.svg')
     open(sp, 'w').write(svg)
     print('wrote %s' % sp)
-    print('wrote %s  (%d rows)' % (out, len(hz)))
+    if not dark:
+        print('wrote %s  (%d rows)' % (out, len(hz)))
     return 0
 
 

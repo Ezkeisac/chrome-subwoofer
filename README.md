@@ -37,6 +37,8 @@ agree to 3.65 dB mean absolute error over 20–80 Hz.
 | Thiele–Small parameters | The small-signal parameters describing driver behaviour: *F*<sub>s</sub> free-air resonance, *Q*<sub>ts</sub> total damping, *V*<sub>as</sub> equivalent compliance volume |
 | *F*<sub>c</sub> | System resonance with the driver mounted in the enclosure. Always above *F*<sub>s</sub>, the enclosed air adding stiffness |
 | *Q*<sub>tc</sub> | Total system damping. 0.707 gives maximally flat response |
+| Butterworth | The alignment with the flattest passband obtainable without a peak before roll-off. For the second-order response of a sealed enclosure it is one specific value, *Q*<sub>tc</sub> = 0.707, which places *F*<sub>3</sub> exactly at *F*<sub>c</sub>. Above it the response rises before falling; below it the roll-off starts earlier and more gently |
+| Filter order | How steeply a filter falls once past its corner, in multiples of 6 dB per octave. Second order is 12 dB per octave, fourth order 24 dB. Filters in series add their orders |
 | *F*<sub>3</sub> | Frequency at which response has fallen 3 dB below the passband |
 | Crossover | The frequency at which the subwoofer yields to the main loudspeakers |
 | dB | A ratio, not an absolute level. −3 dB denotes half power |
@@ -58,12 +60,65 @@ completion. Verification is reported in [`DISCUSSION.md`](DISCUSSION.md) §6.1.
 | **R6** | Crossover to the mains at 60 Hz |
 
 R3 and R6 determined the rest. R3 converts the enclosure from a free design into a
-constrained one (§2). R6 was not a preference: the low-frequency limit of the Nova 7B pair
-was measured, and 60 Hz is where the subwoofer must assume responsibility.
+constrained one (§2), and R6 fixes where the subwoofer's work begins and ends. Of the
+five, two look like numbers chosen by taste — 35 Hz and 60 Hz — and those are the two
+worth justifying.
 
-> **Outstanding.** The measured low-frequency limit of the Nova 7B and its cabinet
-> footprint are not recorded here. Both are inputs to R3 and R6 and should be stated in
-> a revision.
+### 1.1 Why 35 Hz (R1)
+
+**35 Hz is where the programme material stops, not where the cabinet stops.**
+
+The sources are a turntable and a DJ controller (§4.1), so the material is records and
+dance music, and the lowest fundamentals occurring in it are bounded. The open E of a bass
+guitar is 41.2 Hz and the low B of a five-string 30.9 Hz; a tuned drum-machine kick sits
+around 40–60 Hz with its skirt reaching into the thirties. Vinyl imposes a second floor
+from the other direction: low frequencies demand groove excursion, so cutting practice
+attenuates and mono-sums the bottom end, and little below roughly 30 Hz survives onto a
+record in useful quantity. A requirement at 35 Hz therefore sits just beneath the lowest
+fundamental reliably present, and just above the region the sources cannot deliver in the
+first place.
+
+Going lower is not free, and under R3 it is costly in one particular way. In a sealed
+alignment *F*<sub>3</sub> falls only as the enclosure grows, and a fixed cross-section
+leaves volume purchasable in a single currency: height. Every further step down raises the
+cabinet — and the cabinet is a stand. Past some height the monitor standing on it is no
+longer at ear level, and R3 has been satisfied in letter while being defeated in purpose.
+**R1 and R3 trade directly against one another along the only free dimension**, which is
+why the depth target had to be argued rather than aspired to.
+
+### 1.2 Why 60 Hz (R6)
+
+A crossover is two decisions, a frequency and a pair of slopes, and theory constrains
+each.
+
+**That a crossover may sit here at all.** At 60 Hz a wavelength is about 5.7 m, against a
+head some 0.17 m across, so the interaural time and level differences that carry direction
+are vanishingly small. Below roughly 80 Hz a source cannot be localised. That is what
+permits one subwoofer to serve a stereo pair without the bass acquiring a position of its
+own, and it is what frees the cabinet to be placed for the room rather than for the stereo
+image.
+
+**Where the frequency should fall.** At the point where the mains run out, near their own
+−3 dB corner. Higher, and both sources work the same band, where the summed level depends
+on their relative phase rather than on either response alone. Lower, and a gap opens in
+which the mains have rolled off and the subwoofer has not yet taken over. 60 Hz is thus a
+property of the Nova 7B pair rather than a choice about the subwoofer; the customary
+consumer figure of 80 Hz would leave the mains doing work they are no longer good at.
+
+**That two halves meeting do not sum flat on their own.** If each side is −3 dB at the
+crossover and the two arrive in phase, the sum is **+3 dB** — a bump, not a handover. The
+alignment that sums flat is the one where each side is −6 dB there: a Linkwitz–Riley,
+formed by cascading two Butterworth sections and therefore fourth order. The order matters
+as much as the frequency, which is why §6.1 has to establish the order of the chain before
+it can say whether R6 was met.
+
+**What complicates it in this system.** The low-pass is not one filter but two in series
+(§4.1) — the receiver's fixed stage and the plate amplifier's dial — and only their
+product can be measured. The high-pass side is not a filter at all, but the mains' own
+natural roll-off, of whatever order their cabinets happen to give. R6 therefore states a
+target for the acoustic handover, not a dial setting. What the dial must be doing to
+produce that handover is solved in
+[`derive_crossover.py`](calculations/derive_crossover.py), assumptions stated.
 
 ---
 
@@ -98,10 +153,24 @@ constrains rather than in performing it.
 
 ### 2.2 Accounting for the driver
 
-The volume the driver experiences is not the volume enclosed. Magnet and basket occupy
-space and must be deducted, and doing so properly requires measuring them rather than
-estimating: both were determined by water displacement. The distinction matters because
-every subsequent prediction is a function of the effective volume, not the internal one.
+The volume the driver experiences is not the volume enclosed. Magnet and basket intrude
+into the interior and must be deducted before any prediction is made, because every figure
+downstream is a function of the effective volume rather than the internal one. The
+deduction here is 3.13 L against an internal 42.21 L — about 7% of the box, which is not a
+rounding detail in a quantity everything else depends on.
+
+**What water displacement would establish.** The method is Archimedes'. The intruding part
+of the driver is lowered into a filled vessel and the water pushed out is caught and
+measured; the volume displaced equals the volume submerged, whatever its shape. That
+indifference to shape is the whole point, a motor assembly and a cast basket being solids
+no formula describes. It needs nothing beyond a graduated container, and it is the only
+route to the figure for **this** driver rather than for its model.
+
+**It was not performed.** The 3.13 L is the nominal figure from the driver's published
+data, exactly as the Thiele–Small parameters are (§2.4), and it carries the same standing:
+it describes a GRS 10SW-4HE, not necessarily the one in this cabinet. An afternoon with a
+bucket would settle it, and it is listed in [`DISCUSSION.md`](DISCUSSION.md) §6.4 among the
+things to do differently.
 
 ### 2.3 Consequence of the constraint
 
@@ -199,14 +268,6 @@ removes what each coat raises, converging on a flat, sealed, non-absorbent subst
 the baffle is still bare MDF, showing the rebated aperture and the exposed core at the cut
 edge.
 
-Why this matters is visible in Figure 3. Examining the reflection rather than the object,
-horizontal banding runs across the largest face — not a defect in the vinyl, but residual
-substrate geometry magnified by the finish. A matte coating conceals of the order of one
-millimetre of departure from flatness across 600 mm; a specular finish renders the same
-departure as a line visible at conversational distance. **A chrome wrap functions as a
-measuring instrument for the flatwork beneath it**, which makes preparation the principal
-operation and the wrap the short step at the end.
-
 ### 3.3 Vinyl application
 
 VViViD DECO65 chrome vinyl, one roll of 20 ft × 11.8 in. **Pieces were cut from the roll
@@ -237,7 +298,7 @@ of it.
 **Figure 4.** The system as wired. Nova 7B mains on the FRONT A binding posts at right; two
 surround speakers and a small booth monitor on the SURROUND and CENTER clip terminals; the
 subwoofer on the SUB WOOFER RCA output. Source equipment occupies the AUDIO inputs — a
-turntable on DVD, a DJ controller on CD. Serial number cropped.
+turntable on DVD, a DJ controller on CD.
 
 The consequential detail is that the subwoofer is driven from SUB WOOFER rather than a
 full-range output. **That places two low-pass filters in series**, the receiver's own and
@@ -245,31 +306,34 @@ the plate amplifier's, and their slopes sum. A measurement of the system therefo
 characterises the pair, and attributing the result to the amplifier alone would be an
 error — one §6.1 has to unpick.
 
-Only the main pair and the subwoofer participate in the measurements reported here. The
-remaining channels carry nothing during a stereo sweep and were left connected.
-
 Receiver signal processing was disabled and the volume control marked, so the path is
 linear and identical between takes. A gain change between takes would introduce a fixed
 error into every subsequent comparison with nothing in the data to reveal it.
+
+Only the main pair and the subwoofer carry signal. The surround and centre channels were
+left connected and idle, which was a decision rather than an omission: on a receiver with
+bass management, what arrives at SUB WOOFER is determined by the speaker configuration the
+receiver believes it has, so unplugging a channel between takes risks altering the
+subwoofer feed itself. Leaving the configuration untouched is the same precaution as
+marking the volume control. Those channels stay idle **because** processing was disabled —
+in an upmixing mode the receiver would spread a two-channel source across all of them, and
+the bass it then redirected would reach the subwoofer by a route the measurement does not
+account for.
 
 ### 4.2 Why stepped tones rather than a sweep
 
 Playback and capture ran on separate devices sharing no clock — a laptop and the DR-05.
 Swept measurement assumes the two can be aligned in time, and they cannot be.
 
-A stepped excitation removes the assumption instead of working around it. Each tone is an
-independent measurement at a frequency known exactly, so drift between the devices has
-nothing to corrupt: there is no timeline to preserve, only a set of separate observations.
-The frequency being known also means magnitude can be extracted directly at that
-frequency rather than by transforming the whole recording, which is why the analysis
-needs no numerical libraries.
+Stepped tones remove the assumption instead of working around it. Each tone is an
+independent observation at a frequency known exactly, so there is no timeline for drift to
+corrupt — only a set of separate readings. Knowing the frequency in advance also means the
+level can be read out at that frequency directly, which is why the analysis needs no
+numerical libraries.
 
-Two details follow from the same reasoning. Window length is scaled to frequency rather
-than held constant, because a window fixed in seconds contains progressively fewer cycles
-as frequency falls, and the region of interest is the lowest. And the generator records
-where every tone was placed, which the analyser reads rather than recomputing — two
-programs deriving the same layout independently is an opportunity for them to disagree
-silently.
+What follows from that choice — how long each tone runs, how the two programs agree on
+where it landed, and how a recording is aligned when the marker itself is unmeasurable —
+is set out in [`scripts/METHOD.md`](scripts/METHOD.md).
 
 ### 4.3 What the method can establish
 
@@ -347,7 +411,7 @@ https://data.yamaha.com/files/download/other_assets/3/319863/RX-V361_manual.pdf
 |---|---|
 | [`DISCUSSION.md`](DISCUSSION.md) | Verification against requirements, the bracing question, the superseded panel result, and recommendations |
 | [`calculations/`](calculations/) | Dimensions, volumes, driver parameters, the measured-against-predicted table, cost schedule, and executable derivations |
-| [`scripts/`](scripts/) | Excitation, analysis and plotting. Standard library only; each carries a `selftest` |
+| [`scripts/`](scripts/) | Excitation, analysis and plotting. Standard library only; each carries a `selftest`. [`METHOD.md`](scripts/METHOD.md) gives the measurement detail |
 | [`data/`](data/) | Raw measurement data with provenance and stated limitations |
 | [`images/`](images/) | Construction, system and completed-assembly photographs |
 

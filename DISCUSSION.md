@@ -68,7 +68,7 @@ greater scrutiny, not less.**
 ## 6.3 Unresolved residual
 
 Between 32 and 56 Hz, clear of the filter chain, measurement exceeds prediction by about
-3 dB. Three hypotheses: the published parameters do not describe this specimen (§2.3);
+3 dB. Three hypotheses: the published parameters do not describe this specimen (§2.4);
 boundary reinforcement, the cabinet being against a wall; or non-flat microphone response.
 
 **None is eliminated by the present data.** The residual is a maximum centred near
@@ -79,8 +79,10 @@ the boundary.
 
 ## 6.4 Recommendations for repetition
 
-- **Measure driver parameters prior to construction.** Every unresolved residual reported
-  here admits "the published parameters may be inaccurate" among its hypotheses.
+- **Measure the driver before construction — parameters and displaced volume both.** Every
+  unresolved residual reported here admits "the published parameters may be inaccurate"
+  among its hypotheses, and the 3.13 L displacement deducted from the interior is nominal
+  as well (§2.2). The parameters need a test jig; the displacement needs a bucket.
 - **Document construction contemporaneously.** Portions of §3 are reconstructed.
 - **Employ a calibrated microphone.** This converts every relative measurement reported
   here into an absolute one, at a cost small relative to the build.
