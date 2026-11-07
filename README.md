@@ -54,7 +54,7 @@ python3 calculations/derive_box.py
 
 </details>
 
-<details>
+<details open>
 <summary>The model</summary>
 
 Turn it. Switch to wireframe. There is no bracing.
