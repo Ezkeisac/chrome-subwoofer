@@ -365,7 +365,7 @@ an obviously broken one, and a plausible wrong answer is the more dangerous fail
 
 ![Figure 5](images/response.svg)
 **Figure 5.** Measured response of the isolated subwoofer against the sealed-alignment
-prediction, 12–200 Hz. Relative level, normalised to a reference band; the uncalibrated
+prediction and the combined filter chain (fourth-order, −3 dB at 57 Hz; §6.1), 12–200 Hz. Relative level, normalised to a reference band; the uncalibrated
 instrument gives no absolute reference. Regenerate with
 `python3 scripts/plot_response.py`.
 

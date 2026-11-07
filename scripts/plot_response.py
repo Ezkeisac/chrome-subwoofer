@@ -16,13 +16,16 @@ import csv, math, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, 'calculations'))
+from derive_crossover import COMBINED_HZ, COMBINED_ORDER, butter  # one source for the filter
 
 W, H = 760, 380
 L, R, T, B = 56, 18, 20, 52
 FMIN, FMAX, DMIN, DMAX = 12.0, 200.0, -62.0, 10.0
 MEAS, PRED, INK, MUTED, GRID = '#1B6CA8', '#C4762A', '#1d2125', '#6b7580', '#dfe3e8'
+FILT = '#4f5964'
 PAPER, PLOT = '#ffffff', '#fafbfc'
-DARK = dict(MEAS='#56A8E0', PRED='#E09A4F', INK='#e6e9ed', MUTED='#8b95a1',
+DARK = dict(MEAS='#56A8E0', PRED='#E09A4F', FILT='#c3ccd6', INK='#e6e9ed', MUTED='#8b95a1',
             GRID='#2b3138', PAPER='#0d1117', PLOT='#11161d')
 
 
@@ -39,11 +42,16 @@ def py(db):
     return T + (DMAX - db) / (DMAX - DMIN) * (H - T - B)
 
 
+def filter_db(f):
+    """The measured chain, receiver and plate amplifier together: 4th order, -3 dB at 57 Hz."""
+    return 20.0 * math.log10(butter(f, COMBINED_HZ, COMBINED_ORDER))
+
+
 def main():
-    global MEAS, PRED, INK, MUTED, GRID, PAPER, PLOT
+    global MEAS, PRED, FILT, INK, MUTED, GRID, PAPER, PLOT
     dark = '--dark' in sys.argv
     if dark:
-        MEAS, PRED, INK = DARK['MEAS'], DARK['PRED'], DARK['INK']
+        MEAS, PRED, FILT, INK = DARK['MEAS'], DARK['PRED'], DARK['FILT'], DARK['INK']
         MUTED, GRID, PAPER, PLOT = DARK['MUTED'], DARK['GRID'], DARK['PAPER'], DARK['PLOT']
     meas = read(os.path.join(ROOT, 'data', 'response_sub_isolated.csv'))
     pred = read(os.path.join(ROOT, 'data', 'predicted_sealed.csv'))
@@ -56,13 +64,18 @@ def main():
     out = os.path.join(ROOT, 'calculations', 'measured-vs-predicted.csv')
     with open(out, 'w', newline='') as fh:
         w = csv.writer(fh)
-        w.writerow(['hz', 'measured_db', 'predicted_db', 'difference_db'])
+        w.writerow(['hz', 'measured_db', 'predicted_db', 'difference_db', 'filter_db'])
         for f in hz:
             m, p = meas[f], nearest(pred, f)
-            w.writerow(['%.1f' % f, '%.2f' % m, '%.2f' % p, '%+.2f' % (m - p)])
+            w.writerow(['%.1f' % f, '%.2f' % m, '%.2f' % p, '%+.2f' % (m - p),
+                        '%.2f' % (filter_db(f) + 0.0 if filter_db(f) < -0.005 else 0.0)])
 
     def path(d):
         return 'M ' + ' L '.join('%.1f %.1f' % (px(f), py(d[f] if f in d else nearest(d, f))) for f in hz)
+
+    # sampled finely rather than at the 27 measured tones: this one is a formula
+    fine = [FMIN * (FMAX / FMIN) ** (i / 240.0) for i in range(241)]
+    fpath = 'M ' + ' L '.join('%.1f %.1f' % (px(f), py(filter_db(f))) for f in fine)
 
     xt = [(20, '20'), (30, '30'), (50, '50'), (80, '80'), (120, '120'), (200, '200')]
     yt = [(10, '+10'), (0, '0'), (-20, '−20'), (-40, '−40'), (-60, '−60')]
@@ -75,11 +88,12 @@ def main():
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}"
      font-family="system-ui,-apple-system,Segoe UI,sans-serif" role="img"
-     aria-label="Measured response against prediction, 12 to 200 hertz">
+     aria-label="Measured response against prediction and the filter chain, 12 to 200 hertz">
 <rect width="{W}" height="{H}" fill="{PAPER}"/>
 <rect x="{L}" y="{T}" width="{W-L-R}" height="{H-T-B}" fill="{PLOT}"/>
 {g}
 <path d="{path(pred)}" fill="none" stroke="{PRED}" stroke-width="2.2" stroke-dasharray="6 4"/>
+<path d="{fpath}" fill="none" stroke="{FILT}" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.5 5"/>
 <path d="{path(meas)}" fill="none" stroke="{MEAS}" stroke-width="2.6" stroke-linejoin="round"/>
 <g font-size="11.5" fill="{MUTED}">{xl}{yl}</g>
 <text x="{(L+W-R)//2}" y="{H-14}" text-anchor="middle" font-size="11.5" fill="{MUTED}">frequency (Hz)</text>
@@ -90,6 +104,8 @@ def main():
   <text x="{L+47}" y="{T+20}">measured</text>
   <line x1="{L+130}" y1="{T+16}" x2="{L+156}" y2="{T+16}" stroke="{PRED}" stroke-width="2.2" stroke-dasharray="6 4"/>
   <text x="{L+163}" y="{T+20}">predicted</text>
+  <line x1="{L+246}" y1="{T+16}" x2="{L+272}" y2="{T+16}" stroke="{FILT}" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.5 5"/>
+  <text x="{L+279}" y="{T+20}">filter chain, 4th order, −3 dB at {COMBINED_HZ:.0f} Hz</text>
 </g>
 </svg>
 '''

@@ -24,6 +24,9 @@ BOXES = {
     # sleeves on the floor, one carrying a face - third-party artwork, so this one is
     # a decision rather than a default.
     'banner-room.png':   (303, 2150, 1830, 2900),
+    # the whole photograph with the ceiling cut off at the top of the alcove. The sides
+    # lose the tops of the frames on the right wall; the room survives.
+    'banner-studio.jpeg': (0, 1008, 3024, 4032),
 }
 
 
@@ -88,8 +91,13 @@ def main():
             for x in range(cw):
                 buf[d + x * 3:d + x * 3 + 3] = px[s + x * n:s + x * n + 3]
         out = os.path.join(ROOT, 'images', name)
-        write_png(out, cw, ch, buf)
-        subprocess.run(['sips', '-Z', '1600', out], check=True, capture_output=True)
+        png = out if name.endswith('.png') else TMP + '.crop.png'
+        write_png(png, cw, ch, buf)
+        subprocess.run(['sips', '-Z', '1600', png], check=True, capture_output=True)
+        if png != out:      # a written PNG carries no metadata, so the JPEG carries none
+            subprocess.run(['sips', '-s', 'format', 'jpeg', '-s', 'formatOptions', '84',
+                            png, '--out', out], check=True, capture_output=True)
+            os.remove(png)
         print('  %-20s %4d x %-4d  ratio %.2f' % (name, cw, ch, cw / float(ch)))
     os.remove(TMP)
     return 0

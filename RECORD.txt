@@ -1,0 +1,93 @@
+CHROME SUBWOOFER: THE RECORD
+
+What was measured, what was predicted, what was assumed, and where each
+one is kept. The object says nothing. This file says what it can stand
+behind.
+
+
+MEASURED
+
+  Response, isolated subwoofer      data/response_sub_isolated.csv
+                                    mains disconnected, 24-bit,
+                                    peak -2.8 dBFS, 45 of 45 tones
+  Filter chain                      4th order, -3 dB at 57 Hz
+                                    slopes 24.4 and 24.6 dB/octave
+  Prediction against measurement    3.65 dB mean absolute, 20-80 Hz
+  Box model plus filter             1.19 dB mean, 45-110 Hz
+
+  Every level is relative. The recorder was uncalibrated, so spectral
+  shape is available and absolute sound pressure is not.
+
+
+PREDICTED
+
+  From published driver parameters, never measured on this unit.
+
+  Fc 40.27 Hz    Qtc 0.799    F3 36.2 Hz
+
+
+DERIVED
+
+  Effective volume   39.09 L, using a nominal 3.13 L driver displacement
+  Amplifier dial     about 62 Hz, if the receiver's fixed stage is
+                     second order at 90 Hz. The manual gives the
+                     frequency and not the slope.
+
+
+ITEMISED
+
+  Materials          $357.84
+                     fasteners, adhesive, primer and sealant not costed
+
+
+NOT RECORDED
+
+  Where the aperture sits on the baffle. The 3D model reads it from the
+  photographs.
+  How the panels join. There is no cut list.
+  The cone depth and dust cap in the 3D model are drawn, not measured.
+
+
+UNRESOLVED
+
+  32-56 Hz          measurement exceeds prediction by about 3 dB
+  Above 120 Hz      measurement falls below the filter line; not analysed
+  Driver parameters published, never measured
+
+
+WHERE IT IS KEPT
+
+  PAPER.md                  the full paper
+  DISCUSSION.md             verification, the bracing question, the
+                            superseded panel result, recommendations
+  RECORD.txt                this file
+
+  calculations/
+    box-dimensions.csv      driver and enclosure geometry
+    volume.csv              internal, displaced and effective volume
+    driver-parameters.csv   published parameters and what follows
+    materials-cost.csv      the bill of materials
+    measured-vs-predicted.csv  point by point, with the filter
+    derive_box.py           the dimensioning
+    derive_crossover.py     the two filters, deconvolved
+
+  data/
+    response_sub_isolated.csv     the take that measures the enclosure
+    response_system_nearfield.csv subwoofer and mains, the contrast
+    response_panel_position.csv   the panel take, superseded
+    response_nearfield.csv        an early take, superseded
+    predicted_sealed.csv          the sealed-box model
+
+  scripts/
+    METHOD.md               how the measurement was made
+    Standard library only. Those that carry a selftest run with
+    `selftest`.
+
+  images/
+    enclosure.stl           the 3D model
+    response.svg            the measured curve, light
+    response-dark.svg       the measured curve, dark
+    The photographs of the build.
+
+
+Documentation CC BY-SA 4.0, code MIT. See LICENSE.
