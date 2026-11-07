@@ -31,7 +31,15 @@ def dims():
         return {r['item']: float(r['mm']) for r in csv.DictReader(fh)}
 
 
+def stand(p):
+    """Built with y up and the baffle facing -z. GitHub's viewer has z up and looks in
+    from -y, so the model is turned to stand on its floor facing the reader. A proper
+    rotation, not a swap of axes: a swap would mirror it and turn every face inside out."""
+    return -p[0], p[2], p[1]
+
+
 def tri(a, b, c, out):
+    a, b, c = stand(a), stand(b), stand(c)
     ux, uy, uz = (b[i] - a[i] for i in range(3))
     vx, vy, vz = (c[i] - a[i] for i in range(3))
     nx, ny, nz = uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx

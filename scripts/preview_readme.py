@@ -119,6 +119,8 @@ const rubber=new THREE.MeshStandardMaterial({color:0x0a0a0b,metalness:0,roughnes
 // is the block the README actually carries rather than the finer images/enclosure.stl.
 const p=new STLLoader().parse(document.getElementById('stl').textContent)
   .getAttribute('position').array;
+// The STL stands for GitHub's viewer, z up. This scene is y up, so turn it back.
+for(let i=0;i<p.length;i+=3){const X=p[i],Y=p[i+1],Z=p[i+2];p[i]=-X;p[i+1]=Z;p[i+2]=Y;}
 const cab=[],drv=[];
 for(let i=0;i<p.length;i+=9){
   const x=(p[i]+p[i+3]+p[i+6])/3,y=(p[i+1]+p[i+4]+p[i+7])/3,z=(p[i+2]+p[i+5]+p[i+8])/3;
