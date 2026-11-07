@@ -1,6 +1,6 @@
 # Measurement method — implementation detail
 
-The reasoning behind stepped tones rather than a sweep is in the README, §4.2. This file
+The reasoning behind stepped tones rather than a sweep is in `PAPER.md`, §4.2. This file
 records what that choice costs and how the programs are built to pay it. Every constant
 quoted here is the one in the code; change it there, not here.
 

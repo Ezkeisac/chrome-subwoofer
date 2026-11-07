@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render a draft README as a local HTML preview. Stdlib only.
 
-    python3 scripts/preview_readme.py [--in README-chrome-draft.md]
+    python3 scripts/preview_readme.py [--in README.md]
 
 An approximation of GitHub's render, for looking at a draft before it goes anywhere
 public. Collapsible sections, the theme-reactive figure and the animated GIF are the
@@ -242,7 +242,7 @@ def convert(src):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--in', dest='inp', default='README-chrome-draft.md')
+    ap.add_argument('--in', dest='inp', default='README.md')
     ap.add_argument('--out', default='preview-chrome-draft.html')
     a = ap.parse_args()
     os.chdir(ROOT)

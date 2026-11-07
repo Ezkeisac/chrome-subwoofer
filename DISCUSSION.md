@@ -1,6 +1,6 @@
 # Discussion
 
-Companion to [`README.md`](README.md). Section numbering follows the paper.
+Companion to [`PAPER.md`](PAPER.md). Section numbering follows the paper.
 
 **The enclosure meets every requirement it was designed against.** R3 and R4 are
 satisfied by construction. R2 is satisfied within the resolution of the method. R6 is
