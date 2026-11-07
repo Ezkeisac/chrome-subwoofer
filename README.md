@@ -7,6 +7,56 @@ finish, a monitor base.
 
 **318 × 661 × 280 mm · $380**
 
+<img src="images/chrome-turntable.gif" alt="The chrome cabinet turning through a full circle, the driver low on its baffle" width="480">
+
+<details open>
+<summary>The chrome</summary>
+
+The finish is the flatwork.
+
+A mirror is a measuring instrument for whatever lies under it. Hand-sand every surface.
+Lay three coats of primer and sand between them. Sand once more. Then the vinyl.
+
+MDF is porous and its routed edges more so. Unsealed, it absorbs unevenly and telegraphs
+its fibre through any film laid over it. Each coat fills that structure. Each sanding
+removes what the coat raised. What remains is flat, sealed and non-absorbent.
+
+<img src="images/construction-wrapping.jpeg" alt="The cabinet after priming and before vinyl: white primer on the sides, bare MDF on the baffle around the rebated aperture" width="420">
+
+Preparation is the operation. The wrap is the short step at the end: VViViD DECO65, cut
+from the roll in pieces and fitted at the joints.
+
+On a specular finish a seam is permanent. On a corner, where the surface already turns
+away, it reads as an edge. Forty millimetres onto a flat face, the same seam reads as a
+defect.
+
+</details>
+
+<details open>
+<summary>The shape</summary>
+
+A monitor stands on it. That fixed the footprint before any acoustic decision was made,
+and left height as the only dimension free to solve.
+
+An enclosure normally begins with a volume and arrives at proportions. This one runs the
+other way. The footprint fixes the cross-section. **The shape leads and the volume must
+follow.** Two dimensions imposed, one to solve.
+
+The answer is a column more than twice as tall as it is wide. The same volume, unconstrained,
+is a cube.
+
+The footprint here is a Realistic Nova 7B's. Another monitor is another footprint, and
+the height is solved again.
+
+```bash
+python3 calculations/derive_box.py
+```
+
+</details>
+
+<details>
+<summary>The model</summary>
+
 Turn it. Switch to wireframe. There is no bracing.
 
 ```stl
@@ -5334,49 +5384,6 @@ solid enclosure
 endsolid enclosure
 ```
 
-<details open>
-<summary>The chrome</summary>
-
-The finish is the flatwork.
-
-A mirror is a measuring instrument for whatever lies under it. Hand-sand every surface.
-Lay three coats of primer and sand between them. Sand once more. Then the vinyl.
-
-MDF is porous and its routed edges more so. Unsealed, it absorbs unevenly and telegraphs
-its fibre through any film laid over it. Each coat fills that structure. Each sanding
-removes what the coat raised. What remains is flat, sealed and non-absorbent.
-
-<img src="images/construction-wrapping.jpeg" alt="The cabinet after priming and before vinyl: white primer on the sides, bare MDF on the baffle around the rebated aperture" width="420">
-
-Preparation is the operation. The wrap is the short step at the end: VViViD DECO65, cut
-from the roll in pieces and fitted at the joints.
-
-On a specular finish a seam is permanent. On a corner, where the surface already turns
-away, it reads as an edge. Forty millimetres onto a flat face, the same seam reads as a
-defect.
-
-</details>
-
-<details open>
-<summary>The shape</summary>
-
-A monitor stands on it. That fixed the footprint before any acoustic decision was made,
-and left height as the only dimension free to solve.
-
-An enclosure normally begins with a volume and arrives at proportions. This one runs the
-other way. The footprint fixes the cross-section. **The shape leads and the volume must
-follow.** Two dimensions imposed, one to solve.
-
-The answer is a column more than twice as tall as it is wide. The same volume, unconstrained,
-is a cube.
-
-The footprint here is a Realistic Nova 7B's. Another monitor is another footprint, and
-the height is solved again.
-
-```bash
-python3 calculations/derive_box.py
-```
-
 </details>
 
 <details>
@@ -5442,7 +5449,8 @@ The pair is fourth order, −3 dB at 57 Hz, measured. The amplifier's dial decon
 about 62 Hz against a target of 60, if the receiver's fixed stage is second order at
 90 Hz. The manual gives the frequency and not the slope.
 
-Two sources, two inputs. The DJ controller on CD. The record player on DVD.
+Two sources, two inputs. The DJ controller on CD. The record player on DVD, through the
+phono stage built into it. The receiver has no phono input of its own.
 
 The receiver is wired for more than it is asked. Mains on FRONT A, two surrounds, a booth
 monitor on CENTER, the subwoofer on SUB WOOFER. With processing off, a stereo source

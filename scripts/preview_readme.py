@@ -139,6 +139,7 @@ const ctl=new OrbitControls(cam,cv);ctl.enableDamping=true;
 function size(){const w=cv.clientWidth,h=cv.clientHeight;r.setSize(w,h,false);
  cam.aspect=w/h;cam.updateProjectionMatrix();}
 addEventListener('resize',size);size();
+document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',size));
 (function loop(){requestAnimationFrame(loop);ctl.update();r.render(sc,cam);})();
 """
 
@@ -255,7 +256,7 @@ def main():
             '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/'
             'KaTeX/0.16.9/katex.min.css">\n<style>%s</style></head><body><main>\n'
             '<div class="banner"><strong>Local preview.</strong> An approximation of '
-            "GitHub's render. The chrome finish exists only here: GitHub's STL viewer draws "
+            "GitHub's render. The chrome on the model below exists only here: GitHub's STL viewer draws "
             'the same geometry in one flat colour, with wireframe and surface-angle '
             'modes. The collapsible sections, the theme-reactive figure and the '
             'animated GIF are the real behaviour. Scaffolding — delete when done.'

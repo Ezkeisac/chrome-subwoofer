@@ -84,6 +84,7 @@ WHERE IT IS KEPT
     `selftest`.
 
   images/
+    chrome-turntable.gif    the finish, rendered: GitHub draws the model blue
     enclosure.stl           the 3D model
     response.svg            the measured curve, light
     response-dark.svg       the measured curve, dark
